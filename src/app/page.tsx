@@ -1,95 +1,65 @@
+// 'use client';
+
 import Image from "next/image";
 import styles from "./page.module.css";
+
+import { useState } from 'react';
+import AllCustomers from "./allcustomers";
+import GetAllCustomersButton from "./getallcustomersbutton";
+import SearchCustomer from "./searchcustomer";
+
+// const { Client, Environment, ApiError } = require("square")
+
+// const client = new Client({
+//   bearerAuthCredentials: {
+//     // accessToken: process.env.SQUARE_ACCESS_TOKEN
+//   },
+//   // environment: Environment.Sandbox,
+//   environment: Environment.Production,
+// });
+
+// const { customersApi } = client;
+
+// async function getCustomers() {
+//   try {
+//     const response = await customersApi.listCustomers();
+
+//     console.log(response.result);
+//   } catch(error) {
+//     console.log('error:', error)
+//   }
+// }
+// import { getCustomers } from "@/app/lib/data";
+// async function Customers() {
+//   const customers = await getCustomers();
+//   return (
+//     <>
+//       <button>Get Customers</button>
+//       <hr style={{width: "100%", margin: "10px 0"}} />
+//       <ul>
+//         {customers.map((customer: any) => {
+//           return (
+//             <li>{customer.givenName}</li>
+//           )
+//         })}
+//       </ul>
+//     </>
+//   )
+// }
+// let canGetCustomers = false;
+
+
+// const handleClick = (value: boolean) => {
+//   canGetCustomers = value;
+// }
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {/* <GetAllCustomersButton /> */}
+      {/* <SearchCustomer /> */}
+      <AllCustomers />
+      {/* <button onClick={handleGetCustomers}>Get Customers</button> */}
     </main>
   );
 }
