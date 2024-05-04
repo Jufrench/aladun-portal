@@ -1,7 +1,7 @@
 // 'use client'
 
 import { useEffect, useState } from "react";
-import { getAllCustomers } from "@/app/lib/data";
+import { listCustomers } from "@/app/lib/data";
 
 export default async function AllCustomers() {
     // const handleGetCustomers = async () => {
@@ -54,13 +54,14 @@ export default async function AllCustomers() {
   // const customers = getCustomers().then(res => {
   //     console.log('hey!!!')
   // });
-  const customers = await getAllCustomers()
-    .then(result => {
-      console.log('================')
-      console.log('================')
-      console.log('res:', result)
-      return result;
-    });
+  // const customers = await getAllCustomers()
+  //   .then(result => {
+  //     console.log('================')
+  //     console.log('================')
+  //     console.log('res:', result)
+  //     return result;
+  //   })
+  //   .catch((error) => console.log('error:', error)); 
   // console.log('customers:', customers)
 
   return (
@@ -69,11 +70,11 @@ export default async function AllCustomers() {
       Customer List
       <hr style={{width: "100%", margin: "10px 0"}} />
       <ul>
-        {customers.map((customer: any) => {
+        {/* {customers.map((customer: any) => {
           return (
             <li>{customer.givenName}</li>
           )
-        })}
+        })} */}
       </ul>
     </div>
   )

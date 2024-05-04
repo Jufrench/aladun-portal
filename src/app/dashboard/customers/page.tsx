@@ -1,4 +1,5 @@
-import { getAllCustomers } from "@/app/lib/data";
+import { listCustomers } from "@/app/lib/data";
+import CustomerItem from "@/app/ui/customers/customeritem";
 
 export default async function AllCustomers() {
     // const handleGetCustomers = async () => {
@@ -47,10 +48,12 @@ export default async function AllCustomers() {
   //     }
   //   </div>
   // )
-  const customers = await getAllCustomers()
+  const customers = await listCustomers()
     .then(result => {
+      // console.log('result:', result)
       return result;
-    });
+    })
+    .catch(error => console.log('error:', error));
 
   return (
     <div style={{textAlign: 'center'}}>
@@ -58,7 +61,8 @@ export default async function AllCustomers() {
       <ul>
         {customers.map((customer: any) => {
           return (
-            <li>{customer.givenName}</li>
+            // <li>{customer.givenName}</li>
+            <CustomerItem customer={customer} />
           )
         })}
       </ul>
