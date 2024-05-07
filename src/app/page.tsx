@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 import { useState } from 'react';
-import AllCustomers from "./allcustomers";
+import ListCustomers from "./listcustomers";
 import GetAllCustomersButton from "./getallcustomersbutton";
 import SearchCustomer from "./searchcustomer";
 
@@ -58,7 +58,7 @@ export default function Home() {
     <main className={styles.main}>
       {/* <GetAllCustomersButton /> */}
       {/* <SearchCustomer /> */}
-      <AllCustomers />
+      <ListCustomers />
       {/* <button onClick={handleGetCustomers}>Get Customers</button> */}
     </main>
   );

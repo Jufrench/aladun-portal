@@ -34,6 +34,6 @@ export default function GetAllCustomersButton() {
   return (
     <button
       style={{ marginBottom: "10px", padding: "6px" }}
-      onClick={handleClick}>Get All Customers</button>
+      onClick={handleClick}>List Customers</button>
   )
 }

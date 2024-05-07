@@ -9,7 +9,7 @@ const client = new Client({
   environment: Environment.Production,
 });
 
-const { customersApi } = client;
+const { customersApi, giftCardActivitiesApi } = client;
 // const apiError = new ApiError();
 
 export async function getAllCustomers2() {
@@ -26,4 +26,19 @@ export async function getAllCustomers2() {
     console.log('error:', error)
     // console.log('apiError:', apiError)
   }
+}
+
+export async function getActivity(gift_card_id: string) {
+    'use server'
+    try {
+      const response = await giftCardActivitiesApi.listGiftCardActivities(gift_card_id);
+  
+      // console.log('////////////////////////////')
+      // console.log('=============================')
+      // console.log(response.result.giftCardActivities);
+  
+      return response.result.giftCardActivities;
+    } catch(error) {
+      console.log('error:', error)
+    }
 }

@@ -1,7 +1,7 @@
 import { listCustomers } from "@/app/lib/data";
 import CustomerItem from "@/app/ui/customers/customeritem";
 
-export default async function AllCustomers() {
+export default async function ListCustomers() {
     // const handleGetCustomers = async () => {
   //   const customers = await getCustomers();
   //   console.log('%cNeed to get data from the server side, then pass to frontend', 'color:deepskyblue')
@@ -59,10 +59,10 @@ export default async function AllCustomers() {
     <div style={{textAlign: 'center'}}>
       Customer List
       <ul>
-        {customers.map((customer: any) => {
+        {customers.map((customer: any, index: number) => {
           return (
             // <li>{customer.givenName}</li>
-            <CustomerItem customer={customer} />
+            <CustomerItem key={index} customer={customer} />
           )
         })}
       </ul>
