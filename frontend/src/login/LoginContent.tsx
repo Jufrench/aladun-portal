@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Group, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 
 interface LoginContentProps {
   toggleLogin: (value: "login" | "signup") => void;
