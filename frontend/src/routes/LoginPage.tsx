@@ -11,9 +11,12 @@ export default function LoginPage() {
   }
 
   return (
-    <Stack mt="xl" w="auto">
-      {option === "login" && <LoginContent toggleLogin={handleSetOption} />}
-      {option === "signup" && <SignupContent toggleLogin={handleSetOption} />}
-    </Stack>
+    <>
+      <img width="150" src="/aladun_afrolatin_white.png" alt="Aladun logo in white" />
+      <Stack mt="lg" w="auto">
+        {option === "login" && <LoginContent toggleLogin={handleSetOption} />}
+        {option === "signup" && <SignupContent toggleLogin={handleSetOption} />}
+      </Stack>
+    </>
   );
 }
