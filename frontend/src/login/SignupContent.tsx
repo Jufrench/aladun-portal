@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
+import supabase from "../../supabase/supabaseClient";
 
 interface SignupContentProps {
   toggleLogin: (value: "login" | "signup") => void;
@@ -11,6 +12,23 @@ export default function SignupContent(props: SignupContentProps) {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
+
+  async function signup() {
+    if (email && password && confirmPassword) {
+      const { data, error } = await supabase.auth.signUp({
+        email, password,
+      });
+
+      console.log('data:', data)
+      console.log('error:', error)
+    }
+
+    // create user account in square
+    // return id from square
+    // send user email & password to supabase auth
+    // once verified, set auth foreign key to public users table
+    // then set square id to public users table
+  }
 
   return (
     <>
@@ -50,7 +68,13 @@ export default function SignupContent(props: SignupContentProps) {
         onChange={(e) => setConfirmPassword(e.target.value)}
         placeholder="Confirm Password"
       />
-      <Button>Send</Button>
+      <Button
+        onClick={() => {
+          signup();
+        }}
+      >
+        Send
+      </Button>
     </>
   );
 }
