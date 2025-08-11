@@ -1,6 +1,19 @@
-import express, { response } from 'express';
+import dotenv from 'dotenv';
+
+import express from 'express';
 import cors from 'cors';
 import { SquareClient, SquareEnvironment } from "square";
+import { createClient } from '@supabase/supabase-js';
+
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(cors());
+
+const supabaseUrl = 'https://cwglurtxzmmevrtcnjgv.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Sandbox
 // const client = new SquareClient({
@@ -12,7 +25,7 @@ import { SquareClient, SquareEnvironment } from "square";
 // Production
 const client = new SquareClient({
   environment: SquareEnvironment.Production,
-  token: "EAAAlp3qkJYZaZqAY21KXgprwSHgN_oP5-Fe6I3T7ot_vQMrDsZUkJzusGrnDAm4",
+  token: process.env.SQUARE_ACCESS_TOKEN,
 });
 
 const { customers } = client;
@@ -63,11 +76,6 @@ async function searchCustomer(filterValue, filterType = "emailAddress") {
   }
 }
 
-// const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors());
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
