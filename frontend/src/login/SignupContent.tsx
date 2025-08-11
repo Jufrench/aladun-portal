@@ -14,7 +14,7 @@ export default function SignupContent(props: SignupContentProps) {
 
   return (
     <>
-      <Title order={1}>Create an Account</Title>
+      <Title order={1}>Create an account</Title>
       <Group gap="xs" justify="center">
         <Text>Already have an account?</Text>
         <Button
