@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
-import supabase from "../../supabase/supabaseClient";
+import { notifications } from "@mantine/notifications";
 
 interface SignupContentProps {
   toggleLogin: (value: "login" | "signup") => void;
@@ -15,19 +15,38 @@ export default function SignupContent(props: SignupContentProps) {
 
   async function signup() {
     if (email && password && confirmPassword) {
-      const { data, error } = await supabase.auth.signUp({
-        email, password,
-      });
+      try {
+        const response = await fetch("http://localhost:3000/customers/create", {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            emailAddress: email,
+            givenName: firstName,
+            familyName: lastName,
+          })
+        });
 
-      console.log('data:', data)
-      console.log('error:', error)
+        const responseData = await response.json();
+        console.log('data:', responseData)  
+
+        if (responseData.status === 201 && responseData.statusText === "Created") {
+          notifications.show({
+            title: "Success!",
+            message: "Account created!"
+          });
+
+          setTimeout(() => {
+            props.toggleLogin("login");
+          }, 1000);
+        }
+
+        return responseData;
+      } catch(error) {
+        console.error('ERROR:', error);
+      }
     }
-
-    // create user account in square
-    // return id from square
-    // send user email & password to supabase auth
-    // once verified, set auth foreign key to public users table
-    // then set square id to public users table
   }
 
   return (
@@ -38,7 +57,7 @@ export default function SignupContent(props: SignupContentProps) {
         <Button
           p={0}
           variant="subtle"
-          onClick={() => props.toggleLogin("signup")}
+          onClick={() => props.toggleLogin("login")}
         >
           Log in
         </Button>
@@ -69,9 +88,7 @@ export default function SignupContent(props: SignupContentProps) {
         placeholder="Confirm Password"
       />
       <Button
-        onClick={() => {
-          signup();
-        }}
+        onClick={signup}
       >
         Send
       </Button>

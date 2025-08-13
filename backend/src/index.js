@@ -10,6 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(express.json());
 
 const supabaseUrl = 'https://cwglurtxzmmevrtcnjgv.supabase.co';
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -39,41 +40,37 @@ const replacer = (key, value) => {
 };
 
 async function listCustomers() {
-  try {
-    const response = await customers.list({});
-    return JSON.stringify(response.response.customers, replacer);
-    // return responseString;
-  } catch (error) {
-    console.log('ERROR', error);
-  }
+  const response = await customers.list({});
+  return JSON.stringify(response.response.customers, replacer);
 }
 
 async function retrieveCustomer(id) {
-  try {
-    const response = await customers.get({ customerId: id });
-    return JSON.stringify(response.customer, replacer);
-    // return responseString;
-  } catch(error) {
-    console.log('ERROR:', error);
-  }
+  const response = await customers.get({ customerId: id });
+  return JSON.stringify(response.customer, replacer);
 }
 
 async function searchCustomer(filterValue, filterType = "emailAddress") {
-  try {
-    const response = await customers.search({
-      query: {
-        filter: {
-          [filterType]: {
-            fuzzy: filterValue
-          }
+  const response = await customers.search({
+    query: {
+      filter: {
+        [filterType]: {
+          fuzzy: filterValue
         }
       }
-    });
-    // console.log('response ///>:', response)
-    return JSON.stringify(response.customers, replacer);
-  } catch(error) {
-    console.log('ERROR:', error);
-  }
+    }
+  });
+  return JSON.stringify(response.customers, replacer);
+}
+
+async function createCustomer(customerInfo) {
+  const { emailAddress, givenName, familyName } = customerInfo;
+  const response = await supabase.from('profiles').insert({
+    email_address: emailAddress,
+    given_name: givenName,
+    family_name: familyName
+  });
+  console.log('response:', response)
+  res.send(response);
 }
 
 app.listen(PORT, () => {
@@ -84,7 +81,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/customers', async (req, res) => {
+app.get('/customers/list', async (req, res) => {
   try {
     const customers = await listCustomers();
     res.send(customers);
@@ -93,7 +90,7 @@ app.get('/customers', async (req, res) => {
   }
 });
 
-app.get('/customer/:id', async (req, res) => {
+app.get('/customers/:id', async (req, res) => {
   try {
     const customer = await retrieveCustomer(req.params.id);
     res.send(customer);
@@ -102,7 +99,7 @@ app.get('/customer/:id', async (req, res) => {
   }
 });
 
-app.get('/customer/search/:filter', async (req, res) => {
+app.get('/customers/search/:filter', async (req, res) => {
   try {
     const customer = await searchCustomer(req.params.filter);
     res.send(customer);
@@ -110,4 +107,26 @@ app.get('/customer/search/:filter', async (req, res) => {
     console.log('ERROR:', error);
   }
 });
+
+app.post('/customers/create', async (req, res) => {
+  const { emailAddress, givenName, familyName } = req.body;
+  createCustomer({ emailAddress, givenName, familyName });
+
+  try {
+    const response = await supabase.from('profiles').insert({
+      email_address: emailAddress,
+      given_name: givenName,
+      family_name: familyName
+    });
+    console.log('response:', response)
+    res.send(response);
+  } catch(error) {
+    console.log('ERROR:', error);
+  }
+});
+
+// const { data, error, record } = await supabase.functions.invoke('sync-square-customer', {
+//   body: { name: 'myName' },
+// })
+
 
