@@ -13,6 +13,7 @@
     "@mantine/core": "^8.2.4",
     "@mantine/hooks": "^8.2.4",
     "@mantine/notifications": "^8.2.4",
+    "@supabase/supabase-js": "^2.54.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router": "^7.8.0"

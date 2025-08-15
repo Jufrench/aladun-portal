@@ -1,10 +1,10 @@
 import { useState } from "react";
-import LoginContent from "../login/SignupContent";
-import SignupContent from "../login/LoginContent";
 import { Stack } from "@mantine/core";
+import LoginContent from "../components/login/LoginContent";
+import SignupContent from "../components/login/SignupContent";
 
 export default function LoginPage() {
-  const [option, setOption] = useState<"login" | "signup">("login");
+  const [option, setOption] = useState<"login" | "signup">("signup");
 
   function handleSetOption(value: "login" | "signup") {
     setOption(value);
