@@ -76,41 +76,41 @@ export default function SignupContent(props: SignupContentProps) {
     console.log('%cresponse:', 'background:chocolate', response)
   }
 
-  async function signup() {
-    if (email && password && confirmPassword) {
-      try {
-        const response = await fetch("http://localhost:3000/customers/create", {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            emailAddress: email,
-            givenName: firstName,
-            familyName: lastName,
-          })
-        });
+  // async function signup() {
+  //   if (email && password && confirmPassword) {
+  //     try {
+  //       const response = await fetch("http://localhost:3000/customers/create", {
+  //         method: 'POST',
+  //         headers: {
+  //           "Content-Type": "application/json"
+  //         },
+  //         body: JSON.stringify({
+  //           emailAddress: email,
+  //           givenName: firstName,
+  //           familyName: lastName,
+  //         })
+  //       });
 
-        const responseData = await response.json();
-        console.log('data:', responseData)  
+  //       const responseData = await response.json();
+  //       console.log('data:', responseData)  
 
-        if (responseData.status === 201 && responseData.statusText === "Created") {
-          notifications.show({
-            title: "Success!",
-            message: "Account created!"
-          });
+  //       if (responseData.status === 201 && responseData.statusText === "Created") {
+  //         notifications.show({
+  //           title: "Success!",
+  //           message: "Account created!"
+  //         });
 
-          setTimeout(() => {
-            props.toggleLogin("login");
-          }, 1000);
-        }
+  //         setTimeout(() => {
+  //           props.toggleLogin("login");
+  //         }, 1000);
+  //       }
 
-        return responseData;
-      } catch(error) {
-        console.error('ERROR:', error);
-      }
-    }
-  }
+  //       return responseData;
+  //     } catch(error) {
+  //       console.error('ERROR:', error);
+  //     }
+  //   }
+  // }
 
   return (
     <>
