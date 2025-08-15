@@ -5,6 +5,9 @@ import cors from 'cors';
 import { SquareClient, SquareEnvironment } from "square";
 import { createClient } from '@supabase/supabase-js';
 
+import listHandler from './api/customers/list.js';
+import createHandler from './api/customers/create.js';
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,16 +15,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const supabaseUrl = 'https://cwglurtxzmmevrtcnjgv.supabase.co';
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Sandbox
-// const client = new SquareClient({
-//     environment: SquareEnvironment.Sandbox,
-//     // token: "YOUR_ACCESS_TOKEN",
-//     token: "EAAAl7uUQNoPZiirV2e38s3HwBopUPKl5VOCXYKRoTcDSKYvAQvL-C0PY-dW-y2N",
-// });
 
 // Production
 const client = new SquareClient({
@@ -125,8 +121,6 @@ app.post('/customers/create', async (req, res) => {
   }
 });
 
-// const { data, error, record } = await supabase.functions.invoke('sync-square-customer', {
-//   body: { name: 'myName' },
-// })
-
-
+// LOCAL TESTING FOR HANDLERS. REMOVE/COMMENT FOR PRODUCTION
+app.get('/api/customers/list', listHandler);
+app.post('/api/customers/create', createHandler);
