@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
+// import { notifications } from "@mantine/notifications";
 import supabase from "../../supabase/supabaseClient";
 
 interface SignupContentProps {
@@ -13,6 +13,8 @@ export default function SignupContent(props: SignupContentProps) {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
+
+  console.log('%cdon\'t forget to uncomment notifications')
 
   // async function testList() {
   //   try {
