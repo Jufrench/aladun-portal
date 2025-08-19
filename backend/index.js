@@ -5,6 +5,7 @@ import cors from 'cors';
 import { SquareClient, SquareEnvironment } from "square";
 import { createClient } from '@supabase/supabase-js';
 
+// LOCAL TESTING FOR HANDLERS. REMOVE/COMMENT FOR PRODUCTION
 import listHandler from './api/customers/list.js';
 import createHandler from './api/customers/create.js';
 
