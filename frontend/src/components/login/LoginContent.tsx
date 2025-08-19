@@ -17,7 +17,7 @@ export default function LoginContent(props: LoginContentProps) {
         <Button
           p={0}
           variant="subtle"
-          onClick={() => props.toggleLogin("login")}
+          onClick={() => props.toggleLogin("signup")}
         >
           Sign up
         </Button>

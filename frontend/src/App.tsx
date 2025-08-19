@@ -14,7 +14,7 @@ function App() {
 
   // async function getCustomers() {
   //   try {
-  //     const response = await fetch("http://localhost:3000/customers");
+  //     const response = await fetch("http://localhost:3000/customers/list");
   //     const data = await response.json();
   //     setAllCustomers(data);
   //     // return data;
@@ -25,7 +25,7 @@ function App() {
 
   // async function retrieveCustomer(customerId: string) {
   //   try {
-  //     const response = await fetch(`http://localhost:3000/customer/${customerId}`);
+  //     const response = await fetch(`http://localhost:3000/customers/${customerId}`);
   //     const data = await response.json();
   //     setCustomer(data);
   //     return response;
@@ -36,7 +36,7 @@ function App() {
 
   // async function searchCustomer(filterValue: string) {
   //   try {
-  //     const response = await fetch(`http://localhost:3000/customer/search/${filterValue}`);
+  //     const response = await fetch(`http://localhost:3000/customers/search/${filterValue}`);
   //     const data = await response.json();
   //     setCustomer(data);
   //     return response;
@@ -45,51 +45,11 @@ function App() {
   //   }
   // }
 
-  // console.log('%callCustomers:', 'color:tomato', allCustomers);
-
   return (
     <Routes>
       <Route path='/' element={<LoginPage />} />
     </Routes>
   );
-
-  // return (
-  //   <>
-  //     <TextInput
-  //       value={value}
-  //       onChange={(e) => {
-  //         setValue(e.target.value);
-  //       }}
-  //     />
-  //     <Button
-  //       onClick={() => {
-  //         if (value) {
-  //           retrieveCustomer(value);
-  //         }
-  //       }}
-  //     >
-  //       Get Customer
-  //     </Button>
-  //     {customer &&
-  //       <Group>
-  //         <Text>{customer.givenName}</Text>
-  //         <Text>{customer.familyName}</Text>
-  //       </Group>
-  //     }
-  //     <Button
-  //       onClick={() => {
-  //         if (value) {
-  //           searchCustomer(value);
-  //         }
-  //       }}
-  //     >
-  //       Search Customer
-  //     </Button>
-  //   </>
-    
-  // );
-
-
 }
 
 export default App
