@@ -14,7 +14,44 @@ export default function SignupContent(props: SignupContentProps) {
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
 
-  console.log('%cdon\'t forget to uncomment notifications')
+  console.log('%cDon\'t forget to uncomment notifications', 'color:orange')
+
+  async function sayHello() {
+    try {
+      // const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      // const response = await fetch(`${backendUrl}/backend/api/test/hello`);
+      const response = await fetch("http://localhost:3000/api/test/hello");
+      // const response = await fetch("https://aladun-portal.vercel.app/api/test/hello");
+      // const response = await fetch("/api/test/hello"); // use relative path
+      const data = await response.json();
+      // const data = await response.text();
+
+      // console.log('%cresponse:', 'color:limegreen', response)
+      console.log('%cdata:', 'color:limegreen', data)
+    } catch(error) {
+      console.error('ERROR:', error);
+    }
+  }
+
+//   async function testHello() {
+//   try {
+//     const response = await fetch("http://localhost:3000/api/test/hello");
+
+//     const text = await response.text(); // read raw response
+//     console.log("%craw text:", "color:orange", text);
+
+//     // try parsing after inspecting
+//     let data;
+//     try {
+//       data = JSON.parse(text);
+//       console.log("%cparsed JSON:", "color:limegreen", data);
+//     } catch (e) {
+//       console.error("Not valid JSON:", e);
+//     }
+//   } catch (error) {
+//     console.error("ERROR:", error);
+//   }
+// }
 
   // async function testList() {
   //   try {
@@ -156,7 +193,8 @@ export default function SignupContent(props: SignupContentProps) {
         // onClick={signup}
         onClick={() => {
           // testList();
-          testCreate();
+          // testCreate();
+          sayHello();
         }}
       >
         Send
