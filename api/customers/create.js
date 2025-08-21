@@ -1,4 +1,4 @@
-import { createCustomer } from "../../square/customers.js";
+import { createCustomer } from "../../services/square/customers.js";
 
 export default async function handler(req, res) {
   try {

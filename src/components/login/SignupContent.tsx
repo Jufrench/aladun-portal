@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 // import { notifications } from "@mantine/notifications";
-import supabase from "../../supabase/supabaseClient";
+// import supabase from "../../../services/supabase/supabaseClient.js";
 
 interface SignupContentProps {
   toggleLogin: (value: "login" | "signup") => void;
@@ -14,23 +14,54 @@ export default function SignupContent(props: SignupContentProps) {
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
 
-  console.log('%cdon\'t forget to uncomment notifications')
+  console.log('%cDon\'t forget to uncomment notifications', 'color:orange')
 
-  // async function testList() {
+  // async function sayHello() {
   //   try {
-  //     const response = await fetch("http://localhost:3000/api/customers/list");
+  //     const response = await fetch("/api/test/hello"); // use relative path
   //     const data = await response.json();
-  //     console.log('%cresponse:', 'color:limegreen', response)
-  //     console.log('%cdata:', 'color:limegreen', JSON.parse(data))
 
+  //     console.log('%cdata:', 'color:limegreen', data)
   //   } catch(error) {
   //     console.error('ERROR:', error);
   //   }
   // }
 
+//   async function testHello() {
+//   try {
+//     const response = await fetch("http://localhost:3000/api/test/hello");
+
+//     const text = await response.text(); // read raw response
+//     console.log("%craw text:", "color:orange", text);
+
+//     // try parsing after inspecting
+//     let data;
+//     try {
+//       data = JSON.parse(text);
+//       console.log("%cparsed JSON:", "color:limegreen", data);
+//     } catch (e) {
+//       console.error("Not valid JSON:", e);
+//     }
+//   } catch (error) {
+//     console.error("ERROR:", error);
+//   }
+// }
+
+  async function testList() {
+    try {
+      const response = await fetch("api/customers/list");
+      const data = await response.json();
+      // console.log('%cresponse:', 'color:limegreen', response)
+      console.log('%cdata:', 'color:limegreen', JSON.parse(data));
+
+    } catch(error) {
+      console.error('ERROR:', error);
+    }
+  }
+
   // async function testCreate() {
   //   try {
-  //     const response = await fetch("http://localhost:3000/api/customers/create", {
+  //     const response = await fetch("/api/customers/create", {
   //       method: "POST",
   //       headers: {
   //         'Content-Type': 'application/json' // Indicate the content type of the body
@@ -45,38 +76,38 @@ export default function SignupContent(props: SignupContentProps) {
   //     const responseData = await response.json();
   //     console.log('data:', responseData);
 
-  //     if (email) {
-  //       await getUpdatedRow(email);
-  //     }
+  //     // if (email) {
+  //     //   await getUpdatedRow(email);
+  //     // }
   //   } catch(error) {
   //     console.error('ERROR:', error);
   //   }
   // }
-  async function testCreate() {
-    await fetch("http://localhost:3000/api/customers/create", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json' // Indicate the content type of the body
-      },
-      body: JSON.stringify({
-        emailAddress: email,
-        givenName: firstName,
-        familyName: lastName
-      })
-    }).then(res => {
-      return res.json();
-    }).then(res => {
-      console.log('%cres:', 'color:deeppink', res)
-      getUpdatedRow(res[0].email_address);
-    }).catch(error => {
-      console.error('ERROR:', error);
-    })
-  }
+  // async function testCreate() {
+  //   await fetch("http://localhost:3000/api/customers/create", {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json' // Indicate the content type of the body
+  //     },
+  //     body: JSON.stringify({
+  //       emailAddress: email,
+  //       givenName: firstName,
+  //       familyName: lastName
+  //     })
+  //   }).then(res => {
+  //     return res.json();
+  //   }).then(res => {
+  //     console.log('%cres:', 'color:deeppink', res)
+  //     getUpdatedRow(res[0].email_address);
+  //   }).catch(error => {
+  //     console.error('ERROR:', error);
+  //   })
+  // }
 
-  async function getUpdatedRow(email: string) {
-    const response = await supabase.from('test').select().eq("email_address", email);
-    console.log('%cresponse:', 'background:chocolate', response)
-  }
+  // async function getUpdatedRow(email: string) {
+  //   const response = await supabase.from('test').select().eq("email_address", email);
+  //   console.log('%cresponse:', 'background:chocolate', response)
+  // }
 
   // async function signup() {
   //   if (email && password && confirmPassword) {
@@ -155,8 +186,9 @@ export default function SignupContent(props: SignupContentProps) {
       <Button
         // onClick={signup}
         onClick={() => {
-          // testList();
-          testCreate();
+          testList();
+          // testCreate();
+          // sayHello();
         }}
       >
         Send

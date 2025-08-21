@@ -4,7 +4,7 @@
  * @param {*} value type of data - should be bigint
  * @returns string
  */
-export default function replacer (key, value) {
+export default function replacer(key, value) {
   if (typeof value === 'bigint') {
     return value.toString();
   }
