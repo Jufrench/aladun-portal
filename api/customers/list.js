@@ -1,4 +1,4 @@
-import { listCustomers } from "../../square/customers.js";
+import { listCustomers } from "../../services/square/customers.js";
 
 export default async function handler(req, res) {
   try {
