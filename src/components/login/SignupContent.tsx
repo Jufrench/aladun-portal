@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Group, PasswordInput, Text, TextInput, Title } from "@mantine/core";
+import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 // import { notifications } from "@mantine/notifications";
 // import supabase from "../../../services/supabase/supabaseClient.js";
 
@@ -8,6 +8,8 @@ interface SignupContentProps {
 }
 
 export default function SignupContent(props: SignupContentProps) {
+  const theme = useMantineTheme();
+
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
@@ -184,6 +186,7 @@ export default function SignupContent(props: SignupContentProps) {
         placeholder="Confirm Password"
       />
       <Button
+        color={theme.colors.leaf[8]}
         // onClick={signup}
         onClick={() => {
           testList();
