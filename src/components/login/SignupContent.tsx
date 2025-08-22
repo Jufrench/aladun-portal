@@ -5,7 +5,7 @@ import { notifications } from "@mantine/notifications";
 // import supabase from "../../../services/supabase/supabaseClient.js";
 
 interface SignupContentProps {
-  toggleLogin: (value: "login" | "signup") => void;
+  toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
 }
 
 export default function SignupContent(props: SignupContentProps) {
@@ -29,8 +29,7 @@ export default function SignupContent(props: SignupContentProps) {
 
       const data = await response.json();
       console.log('%cdata:', 'color:tomato', data)
-
-      return data.authId;
+      return data;
     } catch(error) {
       console.error('ERROR:', error);
     }
@@ -52,28 +51,44 @@ export default function SignupContent(props: SignupContentProps) {
 
       const data = await response.json();
       console.log('%ccreatePublicUser data:', 'color:limegreen', data)
-      return data.status;
+      return data;
     } catch(error) {
       console.error('ERROR:', error);
     }
   };
 
   async function createUser(userInfo: { email: string, password: string }) {
-    await createAuthUser(userInfo);
-    const status = await createPublicUser();
+    const authResponse = await createAuthUser(userInfo);
+    // const status = await createPublicUser();
 
     // console.group('%c   ', 'background:chocolate')
     // console.log('authId:', authId)
     // console.log('status:', status)
     // console.groupEnd()
 
-    if (status === 201) {
+    if (!authResponse.success) {
       notifications.show({
-        title: "Success!",
-        message: "Account created"
+        title: `Error: ${authResponse.status}`,
+        message: `${authResponse.code} - Could not create auth user`,
+        color: 'red',
       });
+    } else {
+      const response = await createPublicUser();
 
-      props.toggleLogin('login');
+      if (!response.success) {
+        notifications.show({
+          title: `Error: ${response.status}`,
+          message: `Code: ${response.code} - ${response.message}`,
+          color: 'red',
+        });
+      } else {
+        notifications.show({
+          title: "Success!",
+          message: "Account created"
+        });
+  
+        props.toggleLogin('login', email);
+      }
     }
   }
 

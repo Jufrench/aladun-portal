@@ -2,13 +2,16 @@ import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 
 interface LoginContentProps {
-  toggleLogin: (value: "login" | "signup") => void;
+  toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
+  userEmail?: string | undefined;
 }
 
 export default function LoginContent(props: LoginContentProps) {
   const theme = useMantineTheme();
-  const [email, setEmail] = useState<string>();
+  const [email, setEmail] = useState<string>(props.userEmail ?? "");
   const [password, setPassword] = useState<string>();
+
+  console.log('%cLoginContent props.userEmail', 'color:tomato', props.userEmail)
 
   return (
     <>
@@ -37,7 +40,7 @@ export default function LoginContent(props: LoginContentProps) {
       <Button
         color={theme.colors.leaf[8]}
         onClick={() => {
-
+          console.log('log in!')
         }}
       >
         Log in
