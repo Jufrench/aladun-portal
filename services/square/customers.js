@@ -5,21 +5,26 @@ import replacer from "../../utils/json_replacer.js";
 const { customers } = squareClient;
 
 export async function listCustomers() {
-  const response = await customers.list({});
-  return JSON.stringify(response.response.customers, replacer);
+  try {
+    const response = await customers.list({});
+    return JSON.stringify(response.response.customers, replacer);
+  } catch(error) {
+    console.log('ERROR:', error);
+  }
 }
 
-export async function createCustomer(customerInfo) {
-  const { emailAddress, givenName, familyName } = customerInfo;
-
-  console.log('=== change db "test" to "profiles" when done testing ===');
-
-  const { data, error } = await supabase.from('test').insert({
-    email_address: emailAddress,
-    given_name: givenName,
-    family_name: familyName
-  }).select();
-
-  if (error) throw error;
-  return data;
+export async function createSquareCustomer(customerInfo) {
+  try {
+    console.log('=== change db "test" to "profiles" when done testing ===');
+    const { emailAddress, givenName, familyName } = customerInfo;
+    const { data, /* error */ } = await supabase.from('test').insert({
+      email_address: emailAddress,
+      given_name: givenName,
+      family_name: familyName
+    }).select();
+    // TODO: Hande error property
+    return data;
+  } catch(error) {
+    console.log('ERROR:', error);
+  }
 }
