@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 // import { notifications } from "@mantine/notifications";
 // import supabase from "../../../services/supabase/supabaseClient.js";
 
@@ -17,6 +18,64 @@ export default function SignupContent(props: SignupContentProps) {
   const [confirmPassword, setConfirmPassword] = useState<string>();
 
   console.log('%cDon\'t forget to uncomment notifications', 'color:orange')
+
+  const createAuthUser = async (userInfo: { email: string, password: string }) => {
+    try {
+      const response = await fetch("/api/supabase/createAuth", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: userInfo.email, password: userInfo.password })
+      });
+
+      const data = await response.json();
+      console.log('%cdata:', 'color:tomato', data)
+
+      return data.authId;
+    } catch(error) {
+      console.error('ERROR:', error);
+    }
+  };
+
+  const createPublicUser = async () => {
+    const userInfo = {
+      given_name: firstName,
+      family_name: lastName,
+      email_address: email
+    };
+
+    try {
+      const response = await fetch("/api/supabase/createPublic", {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...userInfo })
+      });
+
+      const data = await response.json();
+      console.log('%ccreatePublicUser data:', 'color:limegreen', data)
+      return data.status;
+    } catch(error) {
+      console.error('ERROR:', error);
+    }
+  };
+
+  async function createUser(userInfo: { email: string, password: string }) {
+    await createAuthUser(userInfo);
+    const status = await createPublicUser();
+
+    // console.group('%c   ', 'background:chocolate')
+    // console.log('authId:', authId)
+    // console.log('status:', status)
+    // console.groupEnd()
+
+    if (status === 201) {
+      notifications.show({
+        title: "Success!",
+        message: "Account created"
+      });
+
+      props.toggleLogin('login');
+    }
+  }
 
   // async function sayHello() {
   //   try {
@@ -49,17 +108,17 @@ export default function SignupContent(props: SignupContentProps) {
 //   }
 // }
 
-  async function testList() {
-    try {
-      const response = await fetch("api/customers/list");
-      const data = await response.json();
-      // console.log('%cresponse:', 'color:limegreen', response)
-      console.log('%cdata:', 'color:limegreen', JSON.parse(data));
+  // async function testList() {
+  //   try {
+  //     const response = await fetch("api/customers/list");
+  //     const data = await response.json();
+  //     // console.log('%cresponse:', 'color:limegreen', response)
+  //     console.log('%cdata:', 'color:limegreen', JSON.parse(data));
 
-    } catch(error) {
-      console.error('ERROR:', error);
-    }
-  }
+  //   } catch(error) {
+  //     console.error('ERROR:', error);
+  //   }
+  // }
 
   // async function testCreate() {
   //   try {
@@ -155,6 +214,7 @@ export default function SignupContent(props: SignupContentProps) {
         <Button
           p={0}
           variant="subtle"
+          color={theme.colors.leaf[8]}
           onClick={() => props.toggleLogin("login")}
         >
           Log in
@@ -187,11 +247,10 @@ export default function SignupContent(props: SignupContentProps) {
       />
       <Button
         color={theme.colors.leaf[8]}
-        // onClick={signup}
         onClick={() => {
-          testList();
-          // testCreate();
-          // sayHello();
+          if (email && password && confirmPassword) {
+            createUser({ email, password });
+          }
         }}
       >
         Send

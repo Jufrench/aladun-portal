@@ -9,7 +9,7 @@ export async function listCustomers() {
   return JSON.stringify(response.response.customers, replacer);
 }
 
-export async function createCustomer(customerInfo) {
+export async function createSquareCustomer(customerInfo) {
   const { emailAddress, givenName, familyName } = customerInfo;
 
   console.log('=== change db "test" to "profiles" when done testing ===');
