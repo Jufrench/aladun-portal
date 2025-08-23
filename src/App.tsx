@@ -7,6 +7,8 @@ import '@mantine/core/styles.css';
 import { Route, Routes } from 'react-router';
 import LoginPage from './routes/LoginPage';
 import AuthProvider from './contexts/AuthContext';
+import ProtectedRoute from './routes/ProtectedRoute';
+import HomePage from './routes/HomePage';
 
 function App() {
   // const [value, setValue] = useState<string | undefined>();
@@ -50,6 +52,14 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path='/' element={<LoginPage />} />
+        <Route
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        >
+        </Route>
       </Routes>
     </AuthProvider>
   );
