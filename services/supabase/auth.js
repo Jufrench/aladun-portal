@@ -23,13 +23,12 @@ export const createAuthUser = async ({ email, password }) => {
   }
 };
 
-export const createPublicUser = async ({ given_name, family_name, email_address }) => {
+// export const createPublicUser = async ({ given_name, family_name, email_address }) => {
+export const createPublicUser = async (given_name, family_name, email_address) => {
   try {
     const { data, error, status } = await supabase
       .from('test')
-      .insert({
-        given_name, family_name, email_address,
-      })
+      .insert({ given_name, family_name, email_address })
       .select();
 
     if (error) {

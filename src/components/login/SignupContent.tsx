@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { AuthContext } from "../../contexts/AuthContext";
 // import { notifications } from "@mantine/notifications";
 // import supabase from "../../../services/supabase/supabaseClient.js";
 
@@ -10,6 +11,7 @@ interface SignupContentProps {
 
 export default function SignupContent(props: SignupContentProps) {
   const theme = useMantineTheme();
+  const { signup } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
@@ -19,78 +21,99 @@ export default function SignupContent(props: SignupContentProps) {
 
   console.log('%cDon\'t forget to uncomment notifications', 'color:orange')
 
-  const createAuthUser = async (userInfo: { email: string, password: string }) => {
-    try {
-      const response = await fetch("/api/supabase/createAuth", {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: userInfo.email, password: userInfo.password })
-      });
+  async function handleSignUp(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) {
+    const response = await signup(email, password, firstName, lastName);
 
-      const data = await response.json();
-      console.log('%cdata:', 'color:tomato', data)
-      return data;
-    } catch(error) {
-      console.error('ERROR:', error);
-    }
-  };
-
-  const createPublicUser = async () => {
-    const userInfo = {
-      given_name: firstName,
-      family_name: lastName,
-      email_address: email
-    };
-
-    try {
-      const response = await fetch("/api/supabase/createPublic", {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...userInfo })
-      });
-
-      const data = await response.json();
-      console.log('%ccreatePublicUser data:', 'color:limegreen', data)
-      return data;
-    } catch(error) {
-      console.error('ERROR:', error);
-    }
-  };
-
-  async function createUser(userInfo: { email: string, password: string }) {
-    const authResponse = await createAuthUser(userInfo);
-    // const status = await createPublicUser();
-
-    // console.group('%c   ', 'background:chocolate')
-    // console.log('authId:', authId)
-    // console.log('status:', status)
-    // console.groupEnd()
-
-    if (!authResponse.success) {
+    if (!response.success) {
+      debugger
       notifications.show({
-        title: `Error: ${authResponse.status}`,
-        message: `${authResponse.code} - Could not create auth user`,
-        color: 'red',
+        title: `Error: ${response.status}`,
+        message: response.message,
+        color: 'yellow',
       });
     } else {
-      const response = await createPublicUser();
+      notifications.show({
+        title: "Success!",
+        message: "Account created"
+      });
 
-      if (!response.success) {
-        notifications.show({
-          title: `Error: ${response.status}`,
-          message: `Code: ${response.code} - ${response.message}`,
-          color: 'red',
-        });
-      } else {
-        notifications.show({
-          title: "Success!",
-          message: "Account created"
-        });
-  
-        props.toggleLogin('login', email);
-      }
+      props.toggleLogin('login', email);
     }
+
   }
+
+  // const createAuthUser = async (userInfo: { email: string, password: string }) => {
+  //   try {
+  //     const response = await fetch("/api/supabase/createAuth", {
+  //       method: 'POST',
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email: userInfo.email, password: userInfo.password })
+  //     });
+
+  //     const data = await response.json();
+  //     console.log('%cdata:', 'color:tomato', data)
+  //     return data;
+  //   } catch(error) {
+  //     console.error('ERROR:', error);
+  //   }
+  // };
+
+  // const createPublicUser = async () => {
+  //   const userInfo = {
+  //     given_name: firstName,
+  //     family_name: lastName,
+  //     email_address: email
+  //   };
+
+  //   try {
+  //     const response = await fetch("/api/supabase/createPublic", {
+  //       method: 'POST',
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ ...userInfo })
+  //     });
+
+  //     const data = await response.json();
+  //     console.log('%ccreatePublicUser data:', 'color:limegreen', data)
+  //     return data;
+  //   } catch(error) {
+  //     console.error('ERROR:', error);
+  //   }
+  // };
+
+  // async function createUser(userInfo: { email: string, password: string }) {
+  //   const authResponse = await createAuthUser(userInfo);
+  //   // const status = await createPublicUser();
+
+  //   if (!authResponse.success) {
+  //     notifications.show({
+  //       title: `Error: ${authResponse.status}`,
+  //       message: `${authResponse.code} - Could not create auth user`,
+  //       color: 'red',
+  //     });
+  //   } else {
+  //     const response = await createPublicUser();
+
+  //     if (!response.success) {
+  //       notifications.show({
+  //         title: `Error: ${response.status}`,
+  //         message: `Code: ${response.code} - ${response.message}`,
+  //         color: 'red',
+  //       });
+  //     } else {
+  //       notifications.show({
+  //         title: "Success!",
+  //         message: "Account created"
+  //       });
+  
+  //       props.toggleLogin('login', email);
+  //     }
+  //   }
+  // }
 
   // async function sayHello() {
   //   try {
@@ -263,8 +286,10 @@ export default function SignupContent(props: SignupContentProps) {
       <Button
         color={theme.colors.leaf[8]}
         onClick={() => {
-          if (email && password && confirmPassword) {
-            createUser({ email, password });
+          if (email && password && confirmPassword && firstName && lastName) {
+            // createUser({ email, password });
+            // handleSignUp(email, password);
+            handleSignUp(email, password, firstName, lastName);
           }
         }}
       >
