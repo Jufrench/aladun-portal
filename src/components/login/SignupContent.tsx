@@ -30,7 +30,6 @@ export default function SignupContent(props: SignupContentProps) {
     const response = await signup(email, password, firstName, lastName);
 
     if (!response.success) {
-      debugger
       notifications.show({
         title: `Error: ${response.status}`,
         message: response.message,

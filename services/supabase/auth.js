@@ -23,20 +23,17 @@ export const createAuthUser = async ({ email, password }) => {
   }
 };
 
-// export const createPublicUser = async ({ given_name, family_name, email_address }) => {
-export const createPublicUser = async (given_name, family_name, email_address) => {
+export const loginAuthUser = async (email, password) => {
   try {
-    const { data, error, status } = await supabase
-      .from('test')
-      .insert({ given_name, family_name, email_address })
-      .select();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email, password
+    });
 
     if (error) {
       console.log('error:', error)
       console.log('status:', status)
       return {
         success: false,
-        status,
         code: error.code,
         details: error.details,
         message: error.message
@@ -47,4 +44,4 @@ export const createPublicUser = async (given_name, family_name, email_address) =
   } catch(error) {
     console.log('ERROR:', error);
   }
-};
+}

@@ -8,7 +8,7 @@ import { Route, Routes } from 'react-router';
 import LoginPage from './routes/LoginPage';
 import AuthProvider from './contexts/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
-import HomePage from './routes/HomePage';
+import UserHomePage from './routes/UserHomePage';
 
 function App() {
   // const [value, setValue] = useState<string | undefined>();
@@ -55,10 +55,11 @@ function App() {
         <Route
           element={
             <ProtectedRoute>
-              <HomePage />
+              <UserHomePage />
             </ProtectedRoute>
           }
         >
+          <Route path="/home" element={<UserHomePage />} />
         </Route>
       </Routes>
     </AuthProvider>

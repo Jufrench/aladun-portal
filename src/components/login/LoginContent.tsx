@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 interface LoginContentProps {
   toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
@@ -7,11 +9,22 @@ interface LoginContentProps {
 }
 
 export default function LoginContent(props: LoginContentProps) {
+  const navigate = useNavigate();
   const theme = useMantineTheme();
+  const { login } = useContext(AuthContext);
+
   const [email, setEmail] = useState<string>(props.userEmail ?? "");
   const [password, setPassword] = useState<string>();
 
   console.log('%cLoginContent props.userEmail', 'color:tomato', props.userEmail)
+
+  async function handleLogin(email: string, password: string) {
+    const response = await login(email, password);
+
+    if (response.success) {
+      navigate("/home");
+    }
+  }
 
   return (
     <>
@@ -40,7 +53,9 @@ export default function LoginContent(props: LoginContentProps) {
       <Button
         color={theme.colors.leaf[8]}
         onClick={() => {
-          console.log('log in!')
+          if (email && password) {
+            handleLogin(email, password);
+          }
         }}
       >
         Log in
