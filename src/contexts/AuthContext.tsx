@@ -3,7 +3,6 @@ import { createContext, useState, type ReactNode } from "react";
 export const AuthContext = createContext<any>({});
 const AuthContextProvider = AuthContext.Provider;
 
-// export default function AuthProvider({ children }: { children: ReactNode }) {
 function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<Record<string, any>>();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -48,14 +47,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
       console.error('ERROR:', error);
     }
   };
-
-  // const getUser = async (email:string) => {
-  //   const response = await fetch("/api/db/user", {
-  //     method: 'POST',
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ email })
-  //   });
-  // };
 
   async function logout() {
     console.log('logout')

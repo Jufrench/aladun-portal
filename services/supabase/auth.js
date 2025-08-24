@@ -30,8 +30,7 @@ export const loginAuthUser = async (email, password) => {
     });
 
     if (error) {
-      console.log('error:', error)
-      console.log('status:', status)
+      console.log('ERROR:', error)
       return {
         success: false,
         code: error.code,

@@ -8,7 +8,7 @@ export const createPublicUser = async (id, given_name, family_name, email_addres
       .select();
 
     if (error) {
-      console.log('error:', error)
+      console.log('ERROR:', error)
       console.log('status:', status)
       return {
         success: false,
@@ -34,7 +34,7 @@ export const getUserByAuthId = async (authId) => {
       .select();
 
     if (error) {
-      console.log('error:', error)
+      console.log('ERROR:', error)
       return {
         success: false,
         code: error.code,

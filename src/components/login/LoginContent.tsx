@@ -12,11 +12,8 @@ export default function LoginContent(props: LoginContentProps) {
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const { login } = useContext(AuthContext);
-
   const [email, setEmail] = useState<string>(props.userEmail ?? "");
   const [password, setPassword] = useState<string>();
-
-  console.log('%cLoginContent props.userEmail', 'color:tomato', props.userEmail)
 
   async function handleLogin(email: string, password: string) {
     const response = await login(email, password);
