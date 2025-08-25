@@ -11,13 +11,11 @@ export default function SignupContent(props: SignupContentProps) {
   const theme = useMantineTheme();
   const { signup } = useContext(AuthContext);
 
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [confirmPassword, setConfirmPassword] = useState<string>();
-
-  console.log('%cDon\'t forget to uncomment notifications', 'color:orange')
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   async function handleSignUp(
     email: string,
@@ -85,9 +83,8 @@ export default function SignupContent(props: SignupContentProps) {
       <Button
         color={theme.colors.leaf[8]}
         onClick={() => {
-          if (email && password && confirmPassword && firstName && lastName) {
-            // createUser({ email, password });
-            // handleSignUp(email, password);
+          if (email !== "" && password !== "" && confirmPassword !== ""
+            && firstName !== "" && lastName !== "") {
             handleSignUp(email, password, firstName, lastName);
           }
         }}

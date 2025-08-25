@@ -40,7 +40,16 @@ export const getUserByAuthId = async (authId) => {
         code: error.code,
         details: error.details,
         message: error.message
-      }
+      };
+    }
+
+    if (data.length === 0) {
+      return {
+        success: false,
+        code: 404,
+        details: "No user column found in users with provided eail",
+        message: "No user found!"
+      };
     }
 
     return { success: true, data };
