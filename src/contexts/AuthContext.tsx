@@ -4,7 +4,8 @@ export const AuthContext = createContext<any>({});
 const AuthContextProvider = AuthContext.Provider;
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<Record<string, any>>();
+  const [user, setUser] = useState<Record<string, any> | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   console.log('%cremove api/supabase directory & its contents', 'color:tomato')
@@ -23,7 +24,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       const data = await response.json();
-      console.log('%cdata:', 'color:tomato', data)
+      // if (data.success) {
+      //   setUser(data.public[0]);
+      // }
       return data;
     } catch(error) {
       console.error('ERROR:', error);
@@ -45,6 +48,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
       return data;
     } catch(error) {
       console.error('ERROR:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +58,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContextProvider value={{ signup, login, logout, user, isLoggedIn }}>
+    <AuthContextProvider value={{ signup, login, logout, user, isLoading, isLoggedIn }}>
       <>{children}</>
     </AuthContextProvider>
   )
