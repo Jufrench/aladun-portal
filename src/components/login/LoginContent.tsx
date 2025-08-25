@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
+import { notifications } from "@mantine/notifications";
 
 interface LoginContentProps {
   toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
@@ -18,7 +19,13 @@ export default function LoginContent(props: LoginContentProps) {
   async function handleLogin(email: string, password: string) {
     const response = await login(email, password);
 
-    if (response.success) {
+    if (!response.success) {
+      notifications.show({
+        title: `Error: ${response.message}`,
+        message: response.details,
+        color: 'yellow',
+      });
+    } else {
       navigate("/home");
     }
   }

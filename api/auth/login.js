@@ -11,6 +11,10 @@ export default async function handler(req, res) {
     }
 
     const getUserResponse = await getUserByAuthId(authResponse.data.user.id);
+    if (!getUserResponse.success) {
+      return res.status(400).json(getUserResponse);
+    }
+
     const combinedResponse = {
       success: true,
       auth: authResponse.data,

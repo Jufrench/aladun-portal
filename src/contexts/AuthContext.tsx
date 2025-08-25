@@ -1,13 +1,36 @@
+// import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
 import { createContext, useState, type ReactNode } from "react";
 
 export const AuthContext = createContext<any>({});
 const AuthContextProvider = AuthContext.Provider;
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<Record<string, any>>();
+  const [user, setUser] = useState<Record<string, any> | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // const [webToken, setWebToken] = useLocalStorage({
+  //   key: "token",
+  //   defaultValue: null,
+  // });
 
   console.log('%cremove api/supabase directory & its contents', 'color:tomato')
+
+  // useEffect(() => {
+  //   const token = readLocalStorageValue({ key: "token" });
+  //   if (!token) {
+  //     setIsLoading(false);
+  //     return;
+  //   }
+
+  //   fetch("api/", { headers: { Authorization: `Bearer ${token}` } })
+  //     .then(res => {
+  //       if (!res.ok) throw new Error("Not authenticated");
+  //       return res.json();
+  //     })
+  //     .then((data) => setUser(data.user))
+  //     .catch(() => setUser(null))
+  //     .finally(() => setIsLoading(false));
+  // }, []);
 
   const signup = async (
     email: string,
@@ -23,7 +46,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       const data = await response.json();
-      console.log('%cdata:', 'color:tomato', data)
+      // if (data.success) {
+      //   setUser(data.public[0]);
+      // }
       return data;
     } catch(error) {
       console.error('ERROR:', error);
@@ -37,14 +62,20 @@ function AuthProvider({ children }: { children: ReactNode }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       });
+
       const data = await response.json();
+
       if (data.success) {
         setUser(data.public[0]);
         setIsLoggedIn(true);
+        // setWebToken(data.auth.session.access_token);
       }
+
       return data;
     } catch(error) {
       console.error('ERROR:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +84,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContextProvider value={{ signup, login, logout, user, isLoggedIn }}>
+    <AuthContextProvider value={{ signup, login, logout, user, isLoading, isLoggedIn }}>
       <>{children}</>
     </AuthContextProvider>
   )
