@@ -6,6 +6,7 @@ interface ClassCardsProps {
 }
 
 export default function ClassCards(props: ClassCardsProps) {
+
   return ( 
     <Stack>
       {props.allCards && props.allCards.map((item) => {

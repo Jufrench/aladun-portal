@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Stack, Tabs, Title } from "@mantine/core";
+import { Skeleton, Tabs, Title } from "@mantine/core";
 import ClassCards from "../components/classCards/ClassCards";
 
 export default function UserHomePage() {
   const { isLoading, user } = useContext(AuthContext);
   const [allCards, setAllCards] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<string | null>('first');
+  // const [loading, setLoading] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   function handleChangeTab(tabValue: string) {
     setActiveTab(tabValue);
@@ -22,13 +24,19 @@ export default function UserHomePage() {
 
   async function listGiftCards() {
     try {
+      setLoading(true);
       // const response = await fetch(`/api/giftcards?customerId=${user.square_id}`);
       const response = await fetch(`/api/giftcards?customerId=50V6FTEYNW27VG7PS630PQRG00`);
       const data = await response.json();
-      console.log('//// data:', data);
+      console.log('data:', JSON.parse(data));
       setAllCards(JSON.parse(data));
+      return data;
     } catch(error) {
       console.error('ERROR:', error);
+    } finally {
+      console.log('%cfinally', 'color:tomato')
+      // debugger
+      setLoading(false);
     }
   }
 
@@ -37,18 +45,23 @@ export default function UserHomePage() {
     return "No user found";
   }
 
+  console.log('loading:', loading)
+
   return (
     <>
-    <Stack>
-      <Title order={3}>Hello {user.given_name}</Title>
-    </Stack>
+    {/* <Stack> */}
+      <Title ta="left" mb="md" order={3}>Hello {user.given_name}</Title>
+    {/* </Stack> */}
     <Tabs value={activeTab} onChange={(value: any) => handleChangeTab(value)}>
       <Tabs.List>
         <Tabs.Tab value="class-cards">Class Cards</Tabs.Tab>
         <Tabs.Tab value="attendance">Attendance</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="class-cards">
-        <ClassCards allCards={allCards} />
+        {(loading && allCards.length === 0) && <Skeleton height={100} />}
+        {!loading && allCards.length === 0 && <>No Gift Cards Found</>}
+        {!isLoading && allCards.length > 0 && <ClassCards allCards={allCards} />}
+        {/* <ClassCards allCards={allCards} /> */}
       </Tabs.Panel>
       <Tabs.Panel value="attendance">Attendance</Tabs.Panel>
     </Tabs>
