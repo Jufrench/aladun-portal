@@ -15,6 +15,7 @@ export default function LoginContent(props: LoginContentProps) {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState<string>(props.userEmail ?? "");
   const [password, setPassword] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function handleLogin(email: string, password: string) {
     const response = await login(email, password);
@@ -55,10 +56,12 @@ export default function LoginContent(props: LoginContentProps) {
         placeholder="Password"
       />
       <Button
+        loading={isLoading}
         color={theme.colors.leaf[8]}
         onClick={() => {
           if (email && password) {
             handleLogin(email, password);
+            setIsLoading(true);
           }
         }}
       >

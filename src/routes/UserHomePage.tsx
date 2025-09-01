@@ -7,7 +7,6 @@ export default function UserHomePage() {
   const { isLoading, user } = useContext(AuthContext);
   const [allCards, setAllCards] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<string | null>('first');
-  // const [loading, setLoading] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   function handleChangeTab(tabValue: string) {
@@ -34,8 +33,6 @@ export default function UserHomePage() {
     } catch(error) {
       console.error('ERROR:', error);
     } finally {
-      console.log('%cfinally', 'color:tomato')
-      // debugger
       setLoading(false);
     }
   }
@@ -45,14 +42,10 @@ export default function UserHomePage() {
     return "No user found";
   }
 
-  console.log('loading:', loading)
-
   return (
     <>
-    {/* <Stack> */}
-      <Title ta="left" mb="md" order={3}>Hello {user.given_name}</Title>
-    {/* </Stack> */}
-    <Tabs variant="pills" value={activeTab} onChange={(value: any) => handleChangeTab(value)}>
+    <Title ta="left" mb="md" order={3}>Hello {user.given_name}</Title>
+    <Tabs autoContrast color="#f8f3e6" variant="pills" value={activeTab} onChange={(value: any) => handleChangeTab(value)}>
       <Tabs.List>
         <Tabs.Tab value="class-cards">Class Cards</Tabs.Tab>
         <Tabs.Tab value="attendance">Attendance</Tabs.Tab>

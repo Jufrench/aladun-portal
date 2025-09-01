@@ -45,10 +45,10 @@ export default function GiftCard(props: GiftCardProps) {
         </Card.Section>
         <Card.Section p="xs">
           <Group gap="xs">
-            <Button leftSection={<IconReload />} style={{ flex: "1 0 auto" }}>
+            <Button bg={theme.colors.leaf[8]} leftSection={<IconReload />} style={{ flex: "1 0 auto" }}>
               Reload
             </Button>
-            <Button variant="light" leftSection={<IconBarcode />}>
+            <Button bg={theme.colors.leaf[8]} variant="light" leftSection={<IconBarcode />}>
               Bar Code
             </Button>
             <ActionIcon variant="light" size="lg">
@@ -58,5 +58,5 @@ export default function GiftCard(props: GiftCardProps) {
         </Card.Section>
       </Card>
     </Stack>
-  )
+  );
 }
