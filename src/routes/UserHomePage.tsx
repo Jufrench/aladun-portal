@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Skeleton, Tabs, Title } from "@mantine/core";
+import { Divider, Skeleton, Tabs, Title } from "@mantine/core";
 import ClassCards from "../components/classCards/ClassCards";
 
 export default function UserHomePage() {
@@ -52,13 +52,14 @@ export default function UserHomePage() {
     {/* <Stack> */}
       <Title ta="left" mb="md" order={3}>Hello {user.given_name}</Title>
     {/* </Stack> */}
-    <Tabs value={activeTab} onChange={(value: any) => handleChangeTab(value)}>
+    <Tabs variant="pills" value={activeTab} onChange={(value: any) => handleChangeTab(value)}>
       <Tabs.List>
         <Tabs.Tab value="class-cards">Class Cards</Tabs.Tab>
         <Tabs.Tab value="attendance">Attendance</Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value="class-cards">
-        {(loading && allCards.length === 0) && <Skeleton height={100} />}
+      <Divider />
+      <Tabs.Panel value="class-cards" pt="md">
+        {(loading && allCards.length === 0) && <Skeleton height={200} />}
         {!loading && allCards.length === 0 && <>No Gift Cards Found</>}
         {!isLoading && allCards.length > 0 && <ClassCards allCards={allCards} />}
         {/* <ClassCards allCards={allCards} /> */}

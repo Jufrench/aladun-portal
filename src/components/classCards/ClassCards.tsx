@@ -1,5 +1,5 @@
 import { Stack } from "@mantine/core";
-import CardItem from "./CardItem";
+import GiftCard from "./GiftCard";
 
 interface ClassCardsProps {
   allCards: any[] | undefined;
@@ -7,12 +7,21 @@ interface ClassCardsProps {
 
 export default function ClassCards(props: ClassCardsProps) {
 
-  return ( 
+  return (
     <Stack>
       {props.allCards && props.allCards.map((item) => {
-        // console.log('%citem:', 'color:tomato', item);
-        return <CardItem key={item.id} cardItem={item}  />
+        return <GiftCard key={item.id} giftCard={item}  />
       })}
     </Stack>
-  )
+  );
+
+  // return (
+  //   <>
+  //     <Stack>
+  //       {props.allCards && props.allCards.map((item) => {
+  //         return <CardItem key={item.id} cardItem={item}  />
+  //       })}
+  //     </Stack>
+  //   </>
+  // );
 }
