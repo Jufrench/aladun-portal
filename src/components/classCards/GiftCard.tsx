@@ -1,13 +1,13 @@
-import { ActionIcon, Button, Card, Group, Paper, Pill, Stack, Text, Title, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Button, Card, Group, Paper, Pill, Stack, Text, Title } from "@mantine/core";
 import { IconBarcode, IconDotsVertical, IconReload } from "@tabler/icons-react";
 import dayjs from "dayjs";
 
 interface GiftCardProps {
   giftCard: any;
+  onOpenModal?: () => void;
 }
 
 export default function GiftCard(props: GiftCardProps) {
-  const theme = useMantineTheme();
 
   return (
     <Stack gap="xs">
@@ -17,7 +17,7 @@ export default function GiftCard(props: GiftCardProps) {
             <Group justify="space-between">
               <Stack align="flex-start" gap={0}>
                 <Title order={2}>
-                  {`$${props.giftCard?.balanceMoney.amount}`}
+                  {`$${(props.giftCard.balanceMoney.amount / 100).toFixed(2)}`}
                 </Title>
                 <Text size="sm">Balance</Text>
               </Stack>
@@ -45,13 +45,18 @@ export default function GiftCard(props: GiftCardProps) {
         </Card.Section>
         <Card.Section p="xs">
           <Group gap="xs">
-            <Button color="leaf" leftSection={<IconReload />} style={{ flex: "1 0 auto" }}>
+            <Button
+              color="leaf"
+              leftSection={<IconReload />}
+              style={{ flex: "1 0 auto" }}
+              onClick={props.onOpenModal}
+            >
               Reload
             </Button>
-            <Button color="leaf" variant="light" leftSection={<IconBarcode />}>
+            <Button color="ivory" variant="light" leftSection={<IconBarcode />}>
               Bar Code
             </Button>
-            <ActionIcon color="leaf" variant="light" size="lg">
+            <ActionIcon color="ivory" variant="light" size="lg">
               <IconDotsVertical />
             </ActionIcon>
           </Group>

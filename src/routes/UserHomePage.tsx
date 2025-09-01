@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Divider, Skeleton, Tabs, Title } from "@mantine/core";
+import { Modal, Skeleton, Tabs, Title } from "@mantine/core";
 import ClassCards from "../components/classCards/ClassCards";
+import { useDisclosure } from "@mantine/hooks";
 
 export default function UserHomePage() {
   const { isLoading, user } = useContext(AuthContext);
   const [allCards, setAllCards] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<string | null>('first');
   const [loading, setLoading] = useState<boolean>(true);
+  const [opened, { open, close }] = useDisclosure(false);
 
-  function handleChangeTab(tabValue: string) {
-    setActiveTab(tabValue);
-  }
-
+  const handleChangeTab = (tabValue: string) => setActiveTab(tabValue);
+  const handleOpenModal = () => opened ? close() : open();
   
   useEffect(() => {
     if (activeTab === "class-cards" && allCards.length === 0) {
@@ -50,15 +50,22 @@ export default function UserHomePage() {
         <Tabs.Tab value="class-cards">Class Cards</Tabs.Tab>
         <Tabs.Tab value="attendance">Attendance</Tabs.Tab>
       </Tabs.List>
-      <Divider />
       <Tabs.Panel value="class-cards" pt="md">
         {(loading && allCards.length === 0) && <Skeleton height={200} />}
         {!loading && allCards.length === 0 && <>No Gift Cards Found</>}
-        {!isLoading && allCards.length > 0 && <ClassCards allCards={allCards} />}
+        {!isLoading && allCards.length > 0 &&
+          <ClassCards allCards={allCards} onOpenModal={handleOpenModal} />
+        }
         {/* <ClassCards allCards={allCards} /> */}
       </Tabs.Panel>
       <Tabs.Panel value="attendance">Attendance</Tabs.Panel>
     </Tabs>
+    <Modal
+      opened={opened}
+      onClose={close}
+    >
+      Hello
+    </Modal>
     </>
   );
 }
