@@ -49,7 +49,7 @@ export default function SignupContent(props: SignupContentProps) {
         <Button
           p={0}
           variant="subtle"
-          color={theme.colors.leaf[8]}
+          color="leaf"
           onClick={() => props.toggleLogin("login")}
         >
           Log in
@@ -81,7 +81,7 @@ export default function SignupContent(props: SignupContentProps) {
         placeholder="Confirm Password"
       />
       <Button
-        color={theme.colors.leaf[8]}
+        color="leaf"
         onClick={() => {
           if (email !== "" && password !== "" && confirmPassword !== ""
             && firstName !== "" && lastName !== "") {

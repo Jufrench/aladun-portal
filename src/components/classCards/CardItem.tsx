@@ -48,7 +48,7 @@ export default function CardItem(props: CardItemProps) {
               </Text>
             </Group> */}
             <Text>{props.cardItem.gan}</Text>
-            <Pill c="white" fw="bold" bg={theme.colors.leaf[8]}>{props.cardItem.state}</Pill>
+            <Pill c="white" fw="bold" color="leaf">{props.cardItem.state}</Pill>
             <Menu>
               <Menu.Target>
                 <ActionIcon variant="subtle" color="gray">
@@ -148,7 +148,7 @@ export default function CardItem(props: CardItemProps) {
   //             ${(props.cardItem.balanceMoney.amount / 100).toFixed(2)}
   //             </Text>
   //           </Group>
-  //           <Pill c="white" fw="bold" bg={theme.colors.leaf[8]}>{props.cardItem.state}</Pill>
+  //           <Pill c="white" fw="bold" color="leaf">{props.cardItem.state}</Pill>
   //           <Menu>
   //             <Menu.Target>
   //               <ActionIcon variant="subtle" color="gray">

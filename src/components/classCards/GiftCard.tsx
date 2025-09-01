@@ -34,7 +34,7 @@ export default function GiftCard(props: GiftCardProps) {
                   <Text fw="bold">{props.giftCard.gan.slice(8, 12)}</Text>
                   <Text fw="bold">{props.giftCard.gan.slice(12, 16)}</Text>
                 </Group>
-                <Pill variant="outline" size="xs" c="white" fw="bold" bg={theme.colors.leaf[8]}>{props.giftCard.state}</Pill>
+                <Pill variant="outline" size="xs" c="white" fw="bold" bg="leaf">{props.giftCard.state}</Pill>
               </Group>
               <Group gap="xs"> 
                 <Text size="sm">Created:</Text>
@@ -45,13 +45,13 @@ export default function GiftCard(props: GiftCardProps) {
         </Card.Section>
         <Card.Section p="xs">
           <Group gap="xs">
-            <Button bg={theme.colors.leaf[8]} leftSection={<IconReload />} style={{ flex: "1 0 auto" }}>
+            <Button color="leaf" leftSection={<IconReload />} style={{ flex: "1 0 auto" }}>
               Reload
             </Button>
-            <Button bg={theme.colors.leaf[8]} variant="light" leftSection={<IconBarcode />}>
+            <Button color="leaf" variant="light" leftSection={<IconBarcode />}>
               Bar Code
             </Button>
-            <ActionIcon variant="light" size="lg">
+            <ActionIcon color="leaf" variant="light" size="lg">
               <IconDotsVertical />
             </ActionIcon>
           </Group>
