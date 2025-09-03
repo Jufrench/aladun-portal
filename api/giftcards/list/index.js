@@ -1,4 +1,4 @@
-import { listGiftCards } from "../../services/square/giftcards.js";
+import { listGiftCards } from "../../../services/square/giftcards.js";
 
 export default async function handler(req, res) {
   try {

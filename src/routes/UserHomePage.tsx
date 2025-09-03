@@ -39,7 +39,7 @@ export default function UserHomePage() {
   async function listGiftCards() {
     try {
       setLoading(true);
-      const response = await fetch(`/api/giftcards?customerId=50V6FTEYNW27VG7PS630PQRG00`);
+      const response = await fetch(`/api/giftcards/list?customerId=50V6FTEYNW27VG7PS630PQRG00`);
       const data = await response.json();
 
       if (response.status === 200) {

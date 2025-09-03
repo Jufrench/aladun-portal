@@ -12,7 +12,7 @@ const reloadOptions = [
     amountValue: "200",
     description: "Get 10 classes for $160"
   },
-]
+];
 
 export default function ReloadGiftCardContent() {
   const [amount, setAmount] = useState<string | null>(null);
