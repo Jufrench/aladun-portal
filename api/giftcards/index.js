@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       if (!response.success) {
         return res.status(400).json(response);
       } else {
-        return res.status(200).json(response);
+        return res.status(200).json(response.giftCards);
       }
     }
 

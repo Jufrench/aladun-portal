@@ -3,6 +3,17 @@ import { AuthContext } from "../contexts/AuthContext";
 import { Modal, Skeleton, Tabs, Title } from "@mantine/core";
 import ClassCards from "../components/classCards/ClassCards";
 import { useDisclosure } from "@mantine/hooks";
+import ReloadGiftCardContent from "../components/classCards/ReloadGiftCardContent";
+import BarcodeContent from "../components/classCards/BarcodeContent";
+
+export const ModalAction = {
+  Reload: "Reload",
+  Barcode: "Barcode",
+  Transfer: "Transfer",
+  Delete: "Delete"
+};
+
+export type ModalAction = (typeof ModalAction)[keyof typeof ModalAction];
 
 export default function UserHomePage() {
   const { isLoading, user } = useContext(AuthContext);
@@ -10,13 +21,17 @@ export default function UserHomePage() {
   const [activeTab, setActiveTab] = useState<string | null>('first');
   const [loading, setLoading] = useState<boolean>(true);
   const [opened, { open, close }] = useDisclosure(false);
+  const [modalAction, setModalAction] = useState<ModalAction>();
 
   const handleChangeTab = (tabValue: string) => setActiveTab(tabValue);
-  const handleOpenModal = () => opened ? close() : open();
+  // const handleCloseModal = () => opened ? close() : open();
+  function handleOpenModal(action: ModalAction) {
+    setModalAction(action);
+    open();
+  }
   
   useEffect(() => {
     if (activeTab === "class-cards" && allCards.length === 0) {
-      console.log('hey!')
       listGiftCards();
     }
   }, [activeTab])
@@ -24,11 +39,12 @@ export default function UserHomePage() {
   async function listGiftCards() {
     try {
       setLoading(true);
-      // const response = await fetch(`/api/giftcards?customerId=${user.square_id}`);
       const response = await fetch(`/api/giftcards?customerId=50V6FTEYNW27VG7PS630PQRG00`);
       const data = await response.json();
-      console.log('data:', JSON.parse(data));
-      setAllCards(JSON.parse(data));
+
+      if (response.status === 200) {
+        setAllCards(JSON.parse(data));
+      }
       return data;
     } catch(error) {
       console.error('ERROR:', error);
@@ -42,6 +58,8 @@ export default function UserHomePage() {
     return "No user found";
   }
 
+  console.log('/// fix hot reload error w/ incorrect type of export ///')
+
   return (
     <>
     <Title ta="left" mb="md" order={3}>Hello {user.given_name}</Title>
@@ -54,7 +72,10 @@ export default function UserHomePage() {
         {(loading && allCards.length === 0) && <Skeleton height={200} />}
         {!loading && allCards.length === 0 && <>No Gift Cards Found</>}
         {!isLoading && allCards.length > 0 &&
-          <ClassCards allCards={allCards} onOpenModal={handleOpenModal} />
+          <ClassCards
+            allCards={allCards}
+            onOpenModal={(action: ModalAction) => handleOpenModal(action)}
+          />
         }
         {/* <ClassCards allCards={allCards} /> */}
       </Tabs.Panel>
@@ -63,8 +84,14 @@ export default function UserHomePage() {
     <Modal
       opened={opened}
       onClose={close}
+      title={modalAction}
     >
-      Hello
+      {modalAction === ModalAction.Reload &&
+        <ReloadGiftCardContent />
+      }
+      {modalAction === ModalAction.Barcode &&
+        <BarcodeContent />
+      }
     </Modal>
     </>
   );

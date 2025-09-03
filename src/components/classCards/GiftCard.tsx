@@ -1,10 +1,11 @@
 import { ActionIcon, Button, Card, Group, Paper, Pill, Stack, Text, Title } from "@mantine/core";
 import { IconBarcode, IconDotsVertical, IconReload } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { ModalAction } from "../../routes/UserHomePage";
 
 interface GiftCardProps {
   giftCard: any;
-  onOpenModal?: () => void;
+  onOpenModal?: (action: ModalAction) => void;
 }
 
 export default function GiftCard(props: GiftCardProps) {
@@ -49,11 +50,20 @@ export default function GiftCard(props: GiftCardProps) {
               color="leaf"
               leftSection={<IconReload />}
               style={{ flex: "1 0 auto" }}
-              onClick={props.onOpenModal}
+              onClick={() => {
+                props.onOpenModal && props.onOpenModal(ModalAction.Reload);
+              }}
             >
               Reload
             </Button>
-            <Button color="ivory" variant="light" leftSection={<IconBarcode />}>
+            <Button
+              color="ivory"
+              variant="light"
+              leftSection={<IconBarcode />}
+              onClick={() => {
+                props.onOpenModal && props.onOpenModal(ModalAction.Barcode);
+              }}
+            >
               Bar Code
             </Button>
             <ActionIcon color="ivory" variant="light" size="lg">

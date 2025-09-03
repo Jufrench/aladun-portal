@@ -5,13 +5,6 @@ const { giftCards } = squareClient;
 
 export async function listGiftCards(customerId) {
   try {
-    // const allGiftCards = [];
-    // const currentPage = await giftCards.list({ customerId });
-    // allGiftCards.push(...currentPage.getItems());
-    // console.log('currentPage:', currentPage);
-    // console.log('customerId:', customerId)
-    // console.log('allGiftCards:', allGiftCards)
-
     const response = await giftCards.list({ customerId });
 
     if (response.errors && response.errors.length > 0) {
@@ -23,7 +16,11 @@ export async function listGiftCards(customerId) {
       }
     }
 
-    return JSON.stringify(response.response.giftCards, replacer);
+    // return JSON.stringify(response.response.giftCards, replacer);
+    return {
+      success: true,
+      giftCards: JSON.stringify(response.response.giftCards, replacer)
+    }
   } catch(error) {
     console.log('ERROR:', error);
   }
