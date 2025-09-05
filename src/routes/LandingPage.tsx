@@ -89,6 +89,7 @@ export default function LandingPage() {
           });
         } else {
           const parsedData = JSON.parse(data.paymentLink);
+          console.log('%cparsedData:', 'color:limegreen', parsedData)
           window.open(parsedData.url, '_blank', 'noopener,noreferrer');
         }
       } else {
