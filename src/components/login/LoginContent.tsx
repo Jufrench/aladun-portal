@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { Button, Group, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { notifications } from "@mantine/notifications";
 
 interface LoginContentProps {
-  toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
+  toggleLogin?: (value: "login" | "signup", userEmail?: string | undefined) => void;
   userEmail?: string | undefined;
 }
 
@@ -32,15 +32,15 @@ export default function LoginContent(props: LoginContentProps) {
   }
 
   return (
-    <>
-      <Title order={1}>Log in</Title>
+    <Stack mt="lg" w="auto">
+      {/* <Title order={1}>Log in</Title> */}
       <Group gap="xs" justify="center">
         <Text>Don't have an account?</Text>
         <Button
           p={0}
           variant="subtle"
           color="leaf"
-          onClick={() => props.toggleLogin("signup")}
+          onClick={() => props.toggleLogin && props.toggleLogin("signup")}
         >
           Sign up
         </Button>
@@ -67,6 +67,6 @@ export default function LoginContent(props: LoginContentProps) {
       >
         Log in
       </Button>
-    </>
+    </Stack>
   );
 }

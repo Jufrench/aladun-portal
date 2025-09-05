@@ -1,14 +1,13 @@
 import { useContext, useState } from "react";
-import { Button, Group, PasswordInput, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { Button, Group, PasswordInput, Stack, Text, TextInput, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { AuthContext } from "../../contexts/AuthContext";
 
 interface SignupContentProps {
-  toggleLogin: (value: "login" | "signup", userEmail?: string | undefined) => void;
+  toggleLogin?: (value: "login" | "signup", userEmail?: string | undefined) => void;
 }
 
 export default function SignupContent(props: SignupContentProps) {
-  const theme = useMantineTheme();
   const { signup } = useContext(AuthContext);
 
   const [firstName, setFirstName] = useState<string>("");
@@ -37,20 +36,22 @@ export default function SignupContent(props: SignupContentProps) {
         message: "Account created"
       });
 
-      props.toggleLogin('login', email);
+      props.toggleLogin && props.toggleLogin('login', email);
     }
   }
 
   return (
-    <>
-      <Title order={1}>Create an account</Title>
+    <Stack mt="lg" w="auto">
+      {/* <Title order={1}>Create an account</Title> */}
       <Group gap="xs" justify="center">
         <Text>Already have an account?</Text>
         <Button
           p={0}
           variant="subtle"
           color="leaf"
-          onClick={() => props.toggleLogin("login")}
+          onClick={() => {
+            props.toggleLogin && props.toggleLogin("login");
+          }}
         >
           Log in
         </Button>
@@ -91,6 +92,6 @@ export default function SignupContent(props: SignupContentProps) {
       >
         Send
       </Button>
-    </>
+    </Stack>
   );
 }
