@@ -1,5 +1,4 @@
 import { Button, Card, List, Space, Stack, Text, Title, useMantineTheme } from "@mantine/core";
-// import { IconHandClick } from "@tabler/icons-react";
 import type { ModalActionType } from "../../routes/LandingPage";
 
 interface PricingCardProps {
@@ -42,7 +41,6 @@ export default function PricingCard(props: PricingCardProps) {
         size="md"
         color="white"
         c="black"
-        // leftSection={<IconHandClick />}
         onClick={async () => {
           props.onSelectCardOption(props.cardOption);
           props.onOpenModal("CHECKOUT");
