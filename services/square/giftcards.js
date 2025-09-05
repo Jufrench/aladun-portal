@@ -16,7 +16,6 @@ export async function listGiftCards(customerId) {
       }
     }
 
-    // return JSON.stringify(response.response.giftCards, replacer);
     return {
       success: true,
       giftCards: JSON.stringify(response.response.giftCards, replacer)

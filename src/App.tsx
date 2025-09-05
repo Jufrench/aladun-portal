@@ -10,6 +10,7 @@ import AuthProvider from './contexts/AuthContext';
 import ProtectedRoute from './routes/ProtectedRoute';
 import UserHomePage from './routes/UserHomePage';
 import LandingPage from './routes/LandingPage';
+import LoginPage from './routes/LoginPage';
 
 function App() {
   // const [value, setValue] = useState<string | undefined>();
@@ -52,8 +53,8 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        {/* <Route path='/' element={<LoginPage />} /> */}
         <Route path='/' element={<LandingPage />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route
           element={
             <ProtectedRoute>

@@ -15,15 +15,13 @@ export default function LoginPage() {
   return (
     <>
       <img width="150" src="/aladun_afrolatin_white.png" alt="Aladun logo in white" />
-      <Stack mt="lg" w="auto">
-        {option === "login" &&
-          <LoginContent
-            toggleLogin={handleSetOption}
-            userEmail={createdUserEmail}
-          />
-        }
-        {option === "signup" && <SignupContent toggleLogin={handleSetOption} />}
-      </Stack>
+      {option === "login" &&
+        <LoginContent
+          toggleLogin={handleSetOption}
+          userEmail={createdUserEmail}
+        />
+      }
+      {option === "signup" && <SignupContent toggleLogin={handleSetOption} />}
     </>
   );
 }

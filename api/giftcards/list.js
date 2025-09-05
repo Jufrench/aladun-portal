@@ -1,9 +1,9 @@
-import { listGiftCards } from "../../../services/square/giftcards.js";
+import { listGiftCards } from "../../services/square/giftcards.js";
 
 export default async function handler(req, res) {
   try {
     if (req.method === "GET") {
-      const response = await listGiftCards(req.query.customerId)
+      const response = await listGiftCards(req.query.customerId);
 
       if (!response.success) {
         return res.status(400).json(response);
