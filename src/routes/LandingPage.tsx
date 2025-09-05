@@ -81,6 +81,8 @@ export default function LandingPage() {
 
         const data = await response.json();
 
+        console.log('%cdata', 'color:orange', data)
+
         if (!data.success) {
           notifications.show({
             title: `Error: Checkout Link`,
