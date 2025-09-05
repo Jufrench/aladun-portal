@@ -5,9 +5,11 @@ import * as crypto from 'node:crypto';
 const { checkout } = squareClient;
 
 export async function createPaymentLink(order) {
-  console.log('// square/checkout.js //')
-  console.log('order:', order)
-  console.log('////////////')
+  // console.log('// square/checkout.js //')
+  // console.log('order:', order)
+  console.log('SQUARE_LOCATION_ID_PROD:', process.env.SQUARE_LOCATION_ID_PROD)
+  console.log('process.env.VITE_SUPABASE_URL:', process.env.VITE_SUPABASE_URL)
+  // console.log('////////////')
 
   const finalOrder = {
     locationId: process.env.SQUARE_LOCATION_ID_PROD,

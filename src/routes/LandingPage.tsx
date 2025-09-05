@@ -1,21 +1,38 @@
 import { useState } from "react";
-import { Button, Card, Divider, Group, Modal, Stack, Text, Title } from "@mantine/core";
-import { IconHandClick, IconLogin2 } from "@tabler/icons-react";
+import { Button, Group, Modal, Stack, Text, Title } from "@mantine/core";
+import { IconLogin2 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import LoginSignupTabs from "../components/login/LoginSignupTabs";
 import BuyGiftCardModalContent from "../components/landingPage/BuyGiftCardModalContent";
 import { notifications } from "@mantine/notifications";
+import PricingCard from "../components/landingPage/PricingCard";
 
 const giftCardOptions = [
   {
     discountedPrice: "80",
     giftCardValue: "100",
-    cardDescription: "5 classes for $80"
+    cardDescription: "5 classes for $80",
+    valueType: "Popular",
+    bulletPoints: [
+      "Most common",
+      "First-timers",
+      "Regular visitor",
+      "For any class"
+    ],
+    ctaText: "Purchase"
   },
   {
     discountedPrice: "160",
     giftCardValue: "200",
-    cardDescription: "10 classes for $160"
+    cardDescription: "10 classes for $160",
+    valueType: "Best Value",
+    bulletPoints: [
+      "Best value",
+      "Eager dancers",
+      "Regular visitor",
+      "For any class"
+    ],
+    ctaText: "Purchase"
   },
 ];
 
@@ -29,31 +46,16 @@ export default function LandingPage() {
 
   const handleButtonIsLoading = () => setIsLoading(true);
 
-  const cardElements = giftCardOptions.map(item => {
-    return (
-      <Card padding="sm" withBorder shadow="xl" key={item.giftCardValue}>
-        <Group>
-          <Title order={2}>${item.discountedPrice}</Title>
-          <Divider orientation="vertical" />
-          <Text>{item.cardDescription}</Text>
-        </Group>
-        <Divider mt="sm" mb="sm" />
-        <Button
-          size="md"
-          color="leaf"
-          leftSection={<IconHandClick />}
-          onClick={async () => {
-            setCardOption(item);
-            handleOpenModal("CHECKOUT");
-          }}
-        >
-          Get 20% Off
-          </Button>
-      </Card>
-    );
-  });
-
   console.log('do you need the directory /api/customers?')
+
+  function handleSetCardOption(cardOptionParam: Record<string, string>) {
+    setCardOption(cardOptionParam);
+  }
+
+  function handleOpenModal(action: ModalActionType) {
+    setModalAction(action);
+    open();
+  }
 
   async function handlePurchaseCard(params: {
     firstName: string,
@@ -104,11 +106,6 @@ export default function LandingPage() {
     }
   }
 
-  function handleOpenModal(action: ModalActionType) {
-    setModalAction(action);
-    open();
-  }
-
   async function handleCheckout(params: {
     firstName: string,
     lastName: string
@@ -135,14 +132,22 @@ export default function LandingPage() {
           Log in/Create Account
         </Button>
       </Stack>
-      <Stack gap="md" mt="xl">
+      <Stack gap="md" mt="lg">
         <Stack gap={0}>
-          <Title td="underline" order={3}>Choose a Class Package</Title>
+          <Title order={3}>Choose a Class Package</Title>
           <Text>Join the community!</Text>
         </Stack>
-        <Stack p="xs">
-          {cardElements}
-        </Stack>
+        <Group justify="space-around">
+          {giftCardOptions.map((option: Record<string, any>) => {
+            return (
+              <PricingCard
+                key={option.cardDescription}
+                cardOption={option}
+                onOpenModal={handleOpenModal}
+                onSelectCardOption={handleSetCardOption} />
+            );
+          })}
+        </Group>
       </Stack>
       <Modal.Root opened={opened} onClose={close}>
         <Modal.Overlay />

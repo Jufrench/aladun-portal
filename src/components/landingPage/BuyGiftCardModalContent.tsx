@@ -1,5 +1,5 @@
 import { Button, Stack, TextInput } from "@mantine/core";
-import { IconCreditCardPay, IconPlus } from "@tabler/icons-react";
+import { IconCreditCardPay } from "@tabler/icons-react";
 import { useState } from "react";
 
 interface BuyGiftCardModalContentProps {
@@ -17,41 +17,59 @@ export default function BuyGiftCardModalContent(props: BuyGiftCardModalContentPr
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
   const [email, setEmail] = useState<string>();
-  const [phone, setPhone] = useState<string>("");
+  const [phone, setPhone] = useState<string>();
   
   return (
     <Stack>
       <TextInput
+        withAsterisk
         value={firstName}
         onChange={e => setFirstName(e.target.value)}
         label="First Name"
         placeholder="First Name"
       />
       <TextInput
+        withAsterisk
         value={lastName}
         onChange={e => setLastName(e.target.value)}
         label="Last Name"
         placeholder="Last Name"
       />
       <TextInput
+        withAsterisk
         value={email}
         onChange={e => setEmail(e.target.value)}
         label="Email"
         placeholder="Email"
+        prefix="hi"
       />
       <TextInput
+        withAsterisk
         value={phone}
-        onChange={e => setPhone(e.target.value)}
+        onChange={e => {
+          let value = e.target.value.replace(/\D/g, "");
+          setPhone(value);
+        }}
         label="Phone"
         placeholder="Phone Number"
-        leftSection={<IconPlus size={25} />}
+        leftSection={<>+1</>}
       />
+      {/* <NumberInput
+        hideControls
+        label="Phone"
+        placeholder="Phone number"
+        leftSection={<>+1</>}
+        onChange={value => {
+          if (value &&typeof value === "number")
+          setPhone(value)
+        }}
+      /> */}
       <Button
         mt="sm"
         loading={props.isLoading}
         onClick={() => {
           if (firstName && lastName && email && phone) {
-            props.onCheckout({ firstName, lastName, email, phone });
+            props.onCheckout({ firstName, lastName, email, phone: ("+1" + phone) });
             props.onButtonLoading && props.onButtonLoading();
           }
         }}
