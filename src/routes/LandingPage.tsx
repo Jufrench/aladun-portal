@@ -109,12 +109,13 @@ export default function LandingPage() {
       console.log('%cparsedData:', 'color:limegreen', parsedData)
       setCheckoutUrl(parsedData.url);
       // window.open(parsedData.url, '_blank', 'noopener,noreferrer');
+      window.location.href = parsedData.url;
 
-      const newLink = document.createElement("a");
-      newLink.href = parsedData.url;
-      newLink.target = '_blank';
-      newLink.click();
-      newLink.remove();
+      // const newLink = document.createElement("a");
+      // newLink.href = parsedData.url;
+      // newLink.target = '_blank';
+      // newLink.click();
+      // newLink.remove();
       // return JSON.parse(data.paymentLink);
     } catch(error) {
       console.error('ERROR:', error);
