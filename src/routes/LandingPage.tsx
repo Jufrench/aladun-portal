@@ -43,6 +43,7 @@ export default function LandingPage() {
   const [modalAction, setModalAction] = useState<ModalActionType | null>(null);
   const [cardOption, setCardOption] = useState<Record<string, string>>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [checkoutUrl, setCheckoutUrl] = useState<string>();
 
   const handleButtonIsLoading = () => setIsLoading(true);
 
@@ -64,43 +65,55 @@ export default function LandingPage() {
     phone: string,
   }) {
     try {
-      if (cardOption) {
-        const response = await fetch("/api/giftcards/purchase", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            giftCardValue: cardOption.giftCardValue,
-            discountedPrice: cardOption.discountedPrice,
-            cardDescription: cardOption.cardDescription,
-            firstName: params.firstName,
-            lastName: params.lastName,
-            email: params.email,
-            phone: params.phone,
-          })
-        });
-
-        const data = await response.json();
-
-        console.log('%cdata', 'color:orange', data)
-
-        if (!data.success) {
-          notifications.show({
-            title: `Error: Checkout Link`,
-            message: "Could not generate checkout link. Try again in a few seconds",
-            color: "yellow",
-          });
-        } else {
-          const parsedData = JSON.parse(data.paymentLink);
-          console.log('%cparsedData:', 'color:limegreen', parsedData)
-          window.open(parsedData.url, '_blank', 'noopener,noreferrer');
-        }
-      } else {
+      if (!cardOption) {
         notifications.show({
           title: `Error: Class Card`,
           message: "A card option must be selected",
           color: "yellow",
         });
+        return;
       }
+
+      // const newWindow = window.open('', '_blank', 'noopener,noreferrer');
+
+      const response = await fetch("/api/giftcards/purchase", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          giftCardValue: cardOption.giftCardValue,
+          discountedPrice: cardOption.discountedPrice,
+          cardDescription: cardOption.cardDescription,
+          firstName: params.firstName,
+          lastName: params.lastName,
+          email: params.email,
+          phone: params.phone,
+        })
+      });
+
+      const data = await response.json();
+
+      console.log('%cdata', 'color:orange', data)
+
+      if (!data.success) {
+        console.log('%cerror!', 'color:tomato')
+        notifications.show({
+          title: `Error: Checkout Link`,
+          message: "Could not generate checkout link. Try again in a few seconds",
+          color: "yellow",
+        });
+        // if (newWindow) newWindow.close();
+        return;
+      }
+      
+      const parsedData = JSON.parse(data.paymentLink);
+      console.log('%cparsedData:', 'color:limegreen', parsedData)
+      setCheckoutUrl(parsedData.url);
+      // window.open(parsedData.url, '_blank', 'noopener,noreferrer');
+
+      // const newWindow = window.open('', '_blank', 'noopener,noreferrer');
+      // if (newWindow) {
+      //   newWindow.location.href = parsedData.url;
+      // }
       // return JSON.parse(data.paymentLink);
     } catch(error) {
       console.error('ERROR:', error);
@@ -172,6 +185,7 @@ export default function LandingPage() {
             }
             {modalAction === "CHECKOUT" &&
               <BuyGiftCardModalContent
+                checkoutUrl={checkoutUrl}
                 isLoading={isLoading}
                 onButtonLoading={handleButtonIsLoading}
                 onCheckout={handleCheckout}
