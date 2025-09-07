@@ -6,7 +6,7 @@ const { checkout } = squareClient;
 
 export async function createPaymentLink(order) {
   const finalOrder = {
-    locationId: process.env.SQUARE_LOCATION_ID_PROD,
+    locationId: process.env.SQUARE_LOCATION_ID,
     lineItems: [
       {
         quantity: "1",
@@ -67,6 +67,14 @@ export async function createPaymentLink(order) {
       paymentLink: JSON.stringify(response.paymentLink, replacer)
     }
   } catch(error) {
+    // console.log('====> BOOO!!!')
     console.log('ERROR:', error);
+    // console.log('BOOO!!! ====>')
+    return {
+      success: false,
+      code: error.errors[0].code,
+      detail: error.errors[0].detail,
+      category: error.errors[0].category
+    }
   }
 }

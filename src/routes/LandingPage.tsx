@@ -11,7 +11,7 @@ const giftCardOptions = [
   {
     discountedPrice: "80",
     giftCardValue: "100",
-    cardDescription: "5 classes for $80",
+    cardDescription: "5 classes",
     valueType: "Popular",
     bulletPoints: [
       "Most common",
@@ -24,7 +24,7 @@ const giftCardOptions = [
   {
     discountedPrice: "160",
     giftCardValue: "200",
-    cardDescription: "10 classes for $160",
+    cardDescription: "10 classes",
     valueType: "Best Value",
     bulletPoints: [
       "Best value",
@@ -74,8 +74,6 @@ export default function LandingPage() {
         return;
       }
 
-      // const newWindow = window.open('', '_blank', 'noopener,noreferrer');
-
       const response = await fetch("/api/giftcards/purchase", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,9 +95,9 @@ export default function LandingPage() {
       if (!data.success) {
         console.log('%cerror!', 'color:tomato')
         notifications.show({
-          title: `Error: Checkout Link`,
-          message: "Could not generate checkout link. Try again in a few seconds",
-          color: "yellow",
+          title: `${data.category}`,
+          message: data.detail,
+          color: "red",
         });
         // if (newWindow) newWindow.close();
         return;
