@@ -15,10 +15,10 @@ interface BuyGiftCardModalContentProps {
 }
 
 export default function BuyGiftCardModalContent(props: BuyGiftCardModalContentProps) {
-  const [firstName, setFirstName] = useState<string>();
-  const [lastName, setLastName] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [phone, setPhone] = useState<string>();
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
   
   return (
     <Stack>
@@ -55,16 +55,6 @@ export default function BuyGiftCardModalContent(props: BuyGiftCardModalContentPr
         placeholder="Phone Number"
         leftSection={<>+1</>}
       />
-      {/* <NumberInput
-        hideControls
-        label="Phone"
-        placeholder="Phone number"
-        leftSection={<>+1</>}
-        onChange={value => {
-          if (value &&typeof value === "number")
-          setPhone(value)
-        }}
-      /> */}
       <Button
         mt="sm"
         loading={props.isLoading}
