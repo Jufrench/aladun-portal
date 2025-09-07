@@ -147,6 +147,18 @@ export default function LandingPage() {
         >
           Log in/Create Account
         </Button>
+        <Button
+          onClick={async () => {
+            try {
+              const response = await fetch("/api/giftcards/create");
+              const data = await response.json();
+
+              console.log('%cdata:', 'color:orange', data);
+            } catch(error) {
+              console.error('ERROR:', error);
+            }
+          }}
+        >Create Gift Card</Button>
       </Stack>
       <Stack gap="md" mt="lg">
         <Stack gap={0}>
