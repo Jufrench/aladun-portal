@@ -58,23 +58,11 @@ export async function createPaymentLink(order) {
       }
     }
 
-    console.log('/// square/checkout.js response ///')
-    console.log('response:', response)
-    console.log('/////////')
-
     return {
       success: true,
       paymentLink: JSON.stringify(response.paymentLink, replacer)
     }
   } catch(error) {
-    // console.log('====> BOOO!!!')
     console.log('ERROR:', error);
-    // console.log('BOOO!!! ====>')
-    return {
-      success: false,
-      code: error.errors[0].code,
-      detail: error.errors[0].detail,
-      category: error.errors[0].category
-    }
   }
 }

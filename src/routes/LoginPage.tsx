@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Stack } from "@mantine/core";
 import LoginContent from "../components/login/LoginContent";
 import SignupContent from "../components/login/SignupContent";
 

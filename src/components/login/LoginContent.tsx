@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Button, Group, PasswordInput, Stack, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
+import { Button, Group, PasswordInput, Stack, Text, TextInput } from "@mantine/core";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { notifications } from "@mantine/notifications";
@@ -11,7 +11,6 @@ interface LoginContentProps {
 
 export default function LoginContent(props: LoginContentProps) {
   const navigate = useNavigate();
-  const theme = useMantineTheme();
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState<string>(props.userEmail ?? "");
   const [password, setPassword] = useState<string>();
@@ -33,7 +32,6 @@ export default function LoginContent(props: LoginContentProps) {
 
   return (
     <Stack mt="lg" w="auto">
-      {/* <Title order={1}>Log in</Title> */}
       <Group gap="xs" justify="center">
         <Text>Don't have an account?</Text>
         <Button

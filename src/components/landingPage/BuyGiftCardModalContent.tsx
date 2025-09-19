@@ -1,4 +1,4 @@
-import { Anchor, Button, Stack, TextInput } from "@mantine/core";
+import { Button, Stack, TextInput } from "@mantine/core";
 import { IconCreditCardPay } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -68,15 +68,6 @@ export default function BuyGiftCardModalContent(props: BuyGiftCardModalContentPr
       >
         Checkout
       </Button>
-      {props.checkoutUrl &&
-        <Anchor
-          href={props.checkoutUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Complete Purchase
-        </Anchor>
-      }
     </Stack>
   );
 }
