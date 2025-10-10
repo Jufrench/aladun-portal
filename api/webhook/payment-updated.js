@@ -2,6 +2,9 @@ import { createGiftCard, createGiftCardActivity } from "../../services/square/gi
 import { retrieveOrder } from "../../services/square/orders.js";
 
 export default async function handler(req, res) {
+  console.log('=== payment-updated.js ===')
+  console.log('req.body:', req.body)
+  console.log('===============')
   try {
     const paymentStatus = req.body.data.object.payment.status;
     if (paymentStatus === "COMPLETED") {

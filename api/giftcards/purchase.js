@@ -3,6 +3,9 @@ import { createPaymentLink } from "../../services/square/checkout.js";
 export default async function handler(req, res) {
   try {
     const response = await createPaymentLink(req.body);
+    console.log('/// api/giftcards/purchase.js ///')
+    console.log('req.body:', req.body)
+    console.log('////////////////////')
 
     if (!response.success) {
       return res.status(400).json(response);

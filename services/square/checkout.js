@@ -34,8 +34,8 @@ export async function createPaymentLink(order) {
 
   const buyerData = {
     buyerAddress: {
-        firstName: order.firstName,
-        lastName: order.lastName,
+      firstName: order.firstName,
+      lastName: order.lastName,
     },
     buyerEmail: order.email,
     buyerPhoneNumber: order.phone,
