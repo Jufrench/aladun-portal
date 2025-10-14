@@ -53,8 +53,8 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/login' element={<LoginPage />} />
+        <Route path='/info' element={<LandingPage />} />
+        <Route path='/portal' element={<LoginPage />} />
         <Route
           element={
             <ProtectedRoute>
