@@ -8,16 +8,16 @@ import { notifications } from "@mantine/notifications";
 import PricingCard from "../components/landingPage/PricingCard";
 
 const giftCardOptions = [
-  {
-    discountedPrice: "1",
-    giftCardValue: "1",
-    cardDescription: "test",
-    valueType: "test",
-    bulletPoints: [
-      "testing",
-    ],
-    ctaText: "Test"
-  },
+  // {
+  //   discountedPrice: "1",
+  //   giftCardValue: "1",
+  //   cardDescription: "test",
+  //   valueType: "test",
+  //   bulletPoints: [
+  //     "testing",
+  //   ],
+  //   ctaText: "Test"
+  // },
   {
     discountedPrice: "80",
     giftCardValue: "100",
