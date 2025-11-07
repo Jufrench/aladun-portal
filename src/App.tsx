@@ -53,6 +53,7 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path='/info' element={<LandingPage />} />
         <Route path='/portal' element={<LoginPage />} />
         <Route
