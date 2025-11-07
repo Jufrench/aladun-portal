@@ -7,6 +7,7 @@ const { giftCards } = squareClient;
 export async function listGiftCards(customerId) {
   try {
     const response = await giftCards.list({ customerId });
+    // const response = await giftCards.list({ customerId: 'X7KBVHBA7XA7EJ0F5RE0JVX7FC' });
 
     if (response.errors && response.errors.length > 0) {
       return {
